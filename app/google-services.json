@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "38714884679",
+    "firebase_url": "https://jollydiphotobucket.firebaseio.com",
+    "project_id": "jollydiphotobucket",
+    "storage_bucket": "jollydiphotobucket.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:38714884679:android:835fbc10b9026292bca762",
+        "android_client_info": {
+          "package_name": "com.example.photobucket"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "38714884679-iul6h1ggopo309n3hfe4ppkcgvcmsso5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLkkAEG7BszA7UXUXl9v3JmwCjcTiolVE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "38714884679-iul6h1ggopo309n3hfe4ppkcgvcmsso5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
