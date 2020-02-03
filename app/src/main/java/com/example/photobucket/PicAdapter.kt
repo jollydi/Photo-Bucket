@@ -10,10 +10,11 @@ import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.edit_dialog.view.*
+import java.lang.RuntimeException
 
 private const val PIC_COLLECTION = "pics"
 
-class PicAdapter(val listener: PicListFragment.OnPicSelectedListener?, val context: Context?) : RecyclerView.Adapter<PicViewHolder>() {
+class PicAdapter(private val listener: PicListFragment.OnPicSelectedListener?, val context: Context?) : RecyclerView.Adapter<PicViewHolder>() {
 
     private val pics = ArrayList<Pic>()
 
@@ -29,7 +30,6 @@ class PicAdapter(val listener: PicListFragment.OnPicSelectedListener?, val conte
                     Log.e(Constants.TAG, "Listen error: $exception")
                     return@addSnapshotListener
                 }
-                Log.d(Constants.TAG, "${snapshot?.documentChanges?.size}")
                 for (docChange in snapshot!!.documentChanges) {
                     val pic = Pic.fromSnapshot(docChange.document)
                     when (docChange.type) {
@@ -53,7 +53,6 @@ class PicAdapter(val listener: PicListFragment.OnPicSelectedListener?, val conte
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PicViewHolder {
-        Log.d(Constants.TAG, "Creating VH")
         val view = LayoutInflater.from(context).inflate(R.layout.pic_row_view, parent, false)
         return PicViewHolder(view, this, context)
     }
@@ -84,15 +83,41 @@ class PicAdapter(val listener: PicListFragment.OnPicSelectedListener?, val conte
         val builder = AlertDialog.Builder(context!!)
         builder.setTitle(R.string.edit_title)
         val view = LayoutInflater.from(context).inflate(R.layout.edit_dialog, null, false)
+        view.caption_edit_text.setText(pics[position].caption)
+        view.url_edit_text.setText(pics[position].url)
         builder.setView(view)
         builder.setPositiveButton(android.R.string.ok) { _, _ ->
             val caption = view.caption_edit_text.text.toString()
             val url = view.url_edit_text.text.toString()
             edit(position, caption, url)
         }
+        builder.setNegativeButton(android.R.string.cancel, null)
+        builder.create().show()
+    }
+
+    fun showAddDialog() {
+        val builder = AlertDialog.Builder(context!!)
+        builder.setTitle(R.string.add_title)
+        val view = LayoutInflater.from(context).inflate(R.layout.add_dialog, null, false)
+        builder.setView(view)
+        builder.setPositiveButton(android.R.string.ok) { _, _ ->
+            val caption = view.caption_edit_text.text.toString()
+            val url = view.url_edit_text.text.toString()
+            add(Pic(caption, url))
+        }
+        builder.setNegativeButton(android.R.string.cancel, null)
+        builder.create().show()
     }
 
     fun selectPicAt(position: Int) {
-        listener!!.onPicSelected(pics[position])
+        if (listener != null) {
+            listener.onPicSelected(pics[position])
+        } else {
+            throw RuntimeException("PicSelectedListener is null")
+        }
+    }
+
+    fun onItemDismiss(position: Int) {
+        remove(position)
     }
 }

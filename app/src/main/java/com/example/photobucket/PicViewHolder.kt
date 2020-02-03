@@ -9,8 +9,8 @@ import kotlinx.android.synthetic.main.pic_row_view.view.*
 
 class PicViewHolder : RecyclerView.ViewHolder {
 
-    lateinit var captionTV: TextView
-    lateinit var urlTV: TextView
+    var captionTV: TextView
+    var urlTV: TextView
     var context: Context?
 
     constructor(view: View, adapter: PicAdapter, context: Context?) : super(view) {
@@ -18,7 +18,6 @@ class PicViewHolder : RecyclerView.ViewHolder {
         urlTV = view.pic_url
         view.setOnClickListener {
             adapter.selectPicAt(adapterPosition)
-            true
         }
         view.setOnLongClickListener {
             adapter.showEditDialog(adapterPosition)

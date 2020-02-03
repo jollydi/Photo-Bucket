@@ -2,4 +2,8 @@
     <string name="app_name">PhotoBucket</string>
     <string name="action_settings">Settings</string>
     <string name="edit_title">Edit A Pic</string>
+    <string name="caption">Caption</string>
+    <string name="photo_url">Photo URL</string>
+    <string name="add_title">Add a Pic</string>
+    <string name="title_edit">Change App Title</string>
 </resources>
