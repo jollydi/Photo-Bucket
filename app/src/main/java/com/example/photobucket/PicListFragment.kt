@@ -7,14 +7,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
 
 private const val ARG_LIST = "list"
 
-class PicListFragment(val context: MainActivity) : Fragment() {
+class PicListFragment(val context: MainActivity,
+                      val auth: FirebaseAuth,
+                      val picFilter: Boolean) : Fragment() {
     private var listener: OnPicSelectedListener? = null
 
     override fun onCreateView(
@@ -22,11 +26,12 @@ class PicListFragment(val context: MainActivity) : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val recyclerView = inflater.inflate(R.layout.fragment_pic_list, container, false) as RecyclerView
-        val adapter = PicAdapter(listener, context)
+        val adapter = PicAdapter(listener, context, auth, picFilter)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.setHasFixedSize(true)
         listener?.onPicDetailExit()
+        context.fab.show()
         context.fab.setOnClickListener {
             adapter.showAddDialog()
         }

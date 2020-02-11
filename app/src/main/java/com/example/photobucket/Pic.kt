@@ -10,7 +10,7 @@ import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-class Pic(var caption: String = "", var url: String = "") : Parcelable {
+class Pic(var caption: String = "", var url: String = "", val uid: String? = "") : Parcelable {
 
     @get:Exclude var id = ""
     @IgnoredOnParcel @ServerTimestamp var created: Timestamp? = null
